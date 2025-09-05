@@ -75,6 +75,7 @@
 
   <build>
     <plugins>
+      <!-- Исходники -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -83,13 +84,12 @@
           <execution>
             <id>attach-sources</id>
             <phase>verify</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
+            <goals><goal>jar</goal></goals>
           </execution>
         </executions>
       </plugin>
 
+      <!-- Javadoc -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -98,9 +98,7 @@
           <execution>
             <id>attach-javadocs</id>
             <phase>verify</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
+            <goals><goal>jar</goal></goals>
           </execution>
         </executions>
       </plugin>
@@ -118,6 +116,7 @@
       </activation>
       <build>
         <plugins>
+          <!-- GPG-подпись -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
@@ -126,13 +125,12 @@
               <execution>
                 <id>sign-artifacts</id>
                 <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
+                <goals><goal>sign</goal></goals>
               </execution>
             </executions>
           </plugin>
 
+          <!-- Nexus Staging для Sonatype OSSRH -->
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -144,40 +142,10 @@
               <autoReleaseAfterClose>true</autoReleaseAfterClose>
             </configuration>
           </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <version>3.2.1</version>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.4.1</version>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
         </plugins>
-
       </build>
     </profile>
   </profiles>
+
 
 </project>

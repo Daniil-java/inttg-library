@@ -1,0 +1,47 @@
+name: Deploy to Maven
+
+on:
+  push:
+    tags:
+      - 'v*'               # или branches: [ main ] — по тегам или веткам
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Set up Java 17 and Maven cache
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'       # или temurin, zulu и т.п.
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Configure Maven security files
+        run: |
+          mkdir -p ~/.m2
+
+          # settings-security.xml с зашифрованным мастер-паролем
+          cat > ~/.m2/settings-security.xml <<EOF
+          <settingsSecurity>
+            <master>${{ secrets.MAVEN_MASTER_PASSWORD }}</master>
+          </settingsSecurity>
+          EOF
+
+          # settings.xml с зашифрованной GPG-passphrase
+          cat > ~/.m2/settings.xml <<EOF
+          <settings>
+            <servers>
+              <server>
+                <id>gpg.passphrase</id>
+                <passphrase>${{ secrets.MAVEN_GPG_PASSPHRASE }}</passphrase>
+              </server>
+            </servers>
+          </settings>
+          EOF
+
+      - name: Deploy artifacts to Maven
+        run: mvn -B deploy
