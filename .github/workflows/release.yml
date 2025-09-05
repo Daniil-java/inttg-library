@@ -26,11 +26,6 @@ jobs:
           cat > ~/.m2/settings-security.xml <<'EOF'
           ${{ secrets.MAVEN_SETTINGS_SECURITY }}
           EOF
-          
-          cat > ~/.m2/settings.xml <<'EOF'
-          ${{ secrets.MAVEN_SETTINGS }}
-          EOF
-
 
       - name: Deploy with Maven
         run: mvn deploy -P release
