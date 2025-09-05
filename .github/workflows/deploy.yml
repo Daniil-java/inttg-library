@@ -1,9 +1,8 @@
 # .github/workflows/deploy.yml
-name: Deploy to Maven Central
+name: Release to Maven Central
 
 on:
   push:
-    # Запускается только на пуш тегов вида vX.Y.Z
     tags:
       - 'v*'
 
@@ -11,16 +10,15 @@ jobs:
   release:
     runs-on: ubuntu-latest
 
-    # Переменные окружения подтянутся из GitHub Secrets
+    # Прокидываем секреты в env
     env:
       OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
       OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
       MAVEN_MASTER_PASSWORD: ${{ secrets.MAVEN_MASTER_PASSWORD }}
       MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Java 17 and cache Maven
@@ -30,24 +28,17 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: Import GPG private key
-        # Нужно для того, чтобы maven-gpg-plugin нашёл ключ и снимал подпись
-        run: |
-          gpg --batch --import <( echo "${{ env.GPG_PRIVATE_KEY }}" )
-        shell: bash
-
-      - name: Configure Maven settings
+      - name: Create settings-security.xml
         run: |
           mkdir -p ~/.m2
-
-          # settings-security.xml с зашифрованным мастер-паролем
           cat > ~/.m2/settings-security.xml <<EOF
           <settingsSecurity>
             <master>${MAVEN_MASTER_PASSWORD}</master>
           </settingsSecurity>
           EOF
 
-          # settings.xml с зашифрованной GPG-passphrase и данными для OSSRH
+      - name: Create settings.xml
+        run: |
           cat > ~/.m2/settings.xml <<EOF
           <settings>
             <servers>
@@ -68,5 +59,4 @@ jobs:
           EOF
 
       - name: Deploy to Maven Central
-        # -B — batch mode, -Prelease активирует профиль release, -DperformRelease=true запускает GPG-подпись
-        run: mvn clean deploy -B -Prelease -DperformRelease=true
+        run: mvn -B clean deploy -Prelease -DperformRelease=true
