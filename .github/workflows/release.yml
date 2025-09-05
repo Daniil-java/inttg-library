@@ -20,6 +20,12 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
+      - name: Prepare Maven settings
+        run: |
+          mkdir -p ~/.m2
+          echo "${{ secrets.MAVEN_SETTINGS_SECURITY }}" > ~/.m2/settings-security.xml
+          echo "${{ secrets.MAVEN_SETTINGS }}" > ~/.m2/settings.xml
+
       - name: Deploy with Maven
         run: mvn deploy -P release
         env:
