@@ -1,31 +1,72 @@
+# .github/workflows/deploy.yml
 name: Deploy to Maven Central
 
 on:
   push:
+    # Запускается только на пуш тегов вида vX.Y.Z
     tags:
-      - 'v*'         # срабатывает на push тегов вида v*
+      - 'v*'
 
 jobs:
   release:
     runs-on: ubuntu-latest
 
+    # Переменные окружения подтянутся из GitHub Secrets
+    env:
+      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      MAVEN_MASTER_PASSWORD: ${{ secrets.MAVEN_MASTER_PASSWORD }}
+      MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Java & Maven + GPG
+      - name: Set up Java 17 and cache Maven
         uses: actions/setup-java@v3
         with:
           distribution: 'corretto'
           java-version: '17'
           cache: 'maven'
-          # Sonatype OSSRH
-          server-ids: ossrh
-          server-username: ${{ secrets.OSSRH_USERNAME }}
-          server-password: ${{ secrets.OSSRH_PASSWORD }}
-          # GPG-ключ и пароль
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-      - name: Deploy artifacts
-        run: mvn -B clean deploy -Prelease -DperformRelease=true
+      - name: Import GPG private key
+        # Нужно для того, чтобы maven-gpg-plugin нашёл ключ и снимал подпись
+        run: |
+          gpg --batch --import <( echo "${{ env.GPG_PRIVATE_KEY }}" )
+        shell: bash
+
+      - name: Configure Maven settings
+        run: |
+          mkdir -p ~/.m2
+
+          # settings-security.xml с зашифрованным мастер-паролем
+          cat > ~/.m2/settings-security.xml <<EOF
+          <settingsSecurity>
+            <master>${MAVEN_MASTER_PASSWORD}</master>
+          </settingsSecurity>
+          EOF
+
+          # settings.xml с зашифрованной GPG-passphrase и данными для OSSRH
+          cat > ~/.m2/settings.xml <<EOF
+          <settings>
+            <servers>
+              <server>
+                <id>gpg.passphrase</id>
+                <passphrase>${MAVEN_GPG_PASSPHRASE}</passphrase>
+              </server>
+              <server>
+                <id>ossrh</id>
+                <username>${OSSRH_USERNAME}</username>
+                <password>${OSSRH_PASSWORD}</password>
+              </server>
+            </servers>
+            <activeProfiles>
+              <activeProfile>release</activeProfile>
+            </activeProfiles>
+          </settings>
+          EOF
+
+      - name: Deploy to Maven Central
+        # -B — batch mode, -Prelease активирует профиль release, -DperformRelease=true запускает GPG-подпись
+        run: mvn clean deploy -B -Prelease -DperformRelease=true
