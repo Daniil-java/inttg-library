@@ -79,7 +79,6 @@
   <build>
     <plugins>
 
-
       <!-- Исходники -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -127,6 +126,23 @@
       </plugin>
 
       <!--  Central Publishing Maven Plugin (новый) -->
+<!--      <plugin>-->
+<!--        <groupId>org.sonatype.central</groupId>-->
+<!--        <artifactId>central-publishing-maven-plugin</artifactId>-->
+<!--        <version>0.8.0</version>-->
+<!--        <extensions>true</extensions>-->
+<!--        <configuration>-->
+<!--          <publishingServerId>ossrh</publishingServerId>-->
+<!--        </configuration>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>publish-to-central</id>-->
+<!--            <phase>deploy</phase>-->
+<!--            <goals><goal>publish</goal></goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
+
       <plugin>
         <groupId>org.sonatype.central</groupId>
         <artifactId>central-publishing-maven-plugin</artifactId>
@@ -139,10 +155,13 @@
           <execution>
             <id>publish-to-central</id>
             <phase>deploy</phase>
-            <goals><goal>publish</goal></goals>
+            <goals>
+              <goal>publish</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
+
 
 
       <!--      <plugin>-->
