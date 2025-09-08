@@ -36,11 +36,13 @@
   <distributionManagement>
     <repository>
       <id>ossrh</id>
-      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <url>https://central.sonatype.com/api/publish/v1/maven2/</url>
+      <!--      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
     </repository>
     <snapshotRepository>
       <id>ossrh</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+      <url>https://central.sonatype.com/api/publish/v1/snapshots/</url>
+<!--      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>-->
     </snapshotRepository>
   </distributionManagement>
 
@@ -103,23 +105,23 @@
         </executions>
       </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>3.2.1</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <gpgPassphrase>${env.GPG_PASSPHRASE}</gpgPassphrase>
-        </configuration>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-gpg-plugin</artifactId>-->
+<!--        <version>3.2.1</version>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>sign-artifacts</id>-->
+<!--            <phase>verify</phase>-->
+<!--            <goals>-->
+<!--              <goal>sign</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--        <configuration>-->
+<!--          <gpgPassphrase>${env.GPG_PASSPHRASE}</gpgPassphrase>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
     </plugins>
   </build>
 
@@ -138,7 +140,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.0.1</version>
+            <version>3.2.1</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -146,20 +148,35 @@
                 <goals><goal>sign</goal></goals>
               </execution>
             </executions>
-          </plugin>
-
-          <!-- Nexus Staging для Sonatype OSSRH -->
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.13</version>
-            <extensions>true</extensions>
             <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              <gpgPassphrase>${env.GPG_PASSPHRASE}</gpgPassphrase>
             </configuration>
           </plugin>
+<!--          <plugin>-->
+<!--            <groupId>org.apache.maven.plugins</groupId>-->
+<!--            <artifactId>maven-gpg-plugin</artifactId>-->
+<!--            <version>3.0.1</version>-->
+<!--            <executions>-->
+<!--              <execution>-->
+<!--                <id>sign-artifacts</id>-->
+<!--                <phase>verify</phase>-->
+<!--                <goals><goal>sign</goal></goals>-->
+<!--              </execution>-->
+<!--            </executions>-->
+<!--          </plugin>-->
+
+          <!-- Nexus Staging для Sonatype OSSRH -->
+<!--          <plugin>-->
+<!--            <groupId>org.sonatype.plugins</groupId>-->
+<!--            <artifactId>nexus-staging-maven-plugin</artifactId>-->
+<!--            <version>1.6.13</version>-->
+<!--            <extensions>true</extensions>-->
+<!--            <configuration>-->
+<!--              <serverId>ossrh</serverId>-->
+<!--              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
+<!--              <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
+<!--            </configuration>-->
+<!--          </plugin>-->
         </plugins>
       </build>
     </profile>
