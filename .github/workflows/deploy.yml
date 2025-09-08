@@ -40,7 +40,7 @@ jobs:
 #          ${{ secrets.MAVEN_SETTINGS }}
 #          EOF
 
-              mkdir -p ~/.m2
+          mkdir -p ~/.m2
           cat > ~/.m2/settings-security.xml <<'EOF'
           ${{ secrets.MAVEN_SETTINGS_SECURITY }}
           EOF
