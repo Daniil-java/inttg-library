@@ -30,23 +30,15 @@ jobs:
 
       - name: Prepare Maven settings
         run: |
-          cat > ~/.settings-security.xml <<'EOF'
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings-security.xml <<'EOF'
           ${{ secrets.MAVEN_SETTINGS_SECURITY }}
           EOF
-
+          
           cat > ~/.m2/settings.xml <<'EOF'
           ${{ secrets.MAVEN_SETTINGS }}
           EOF
 
-#          cat > ~/.settings-security.xml <<EOF
-#          ${{ secrets.MAVEN_SETTINGS_SECURITY }}
-#          EOF
-#
-#          # 2) credentials
-#          mkdir -p ~/.m2
-#          cat > ~/.m2/settings.xml <<EOF
-#          ${{ secrets.MAVEN_SETTINGS }}
-#          EOF
 
       - name: deploy
         run: mvn -B clean deploy -Prelease -DperformRelease=true
