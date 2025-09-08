@@ -16,29 +16,30 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          server-ids: 'ossrh'
+          server-id: 'ossrh'
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Prepare Maven settings
         run: |
-          cat > ~/.settings-security.xml <<EOF
-          ${{ secrets.MAVEN_SETTINGS_SECURITY }}
-          EOF
-          
-          # 2) credentials
-          mkdir -p ~/.m2
-          cat > ~/.m2/settings.xml <<EOF
-          ${{ secrets.MAVEN_SETTINGS }}
-          EOF
-#          mkdir -p ~/.m2
-#          cat > ~/.m2/settings-security.xml <<'EOF'
+#          cat > ~/.settings-security.xml <<EOF
 #          ${{ secrets.MAVEN_SETTINGS_SECURITY }}
 #          EOF
 #
-#          cat > ~/.m2/settings.xml <<'EOF'
+#          # 2) credentials
+#          mkdir -p ~/.m2
+#          cat > ~/.m2/settings.xml <<EOF
 #          ${{ secrets.MAVEN_SETTINGS }}
 #          EOF
+
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings-security.xml <<'EOF'
+          ${{ secrets.MAVEN_SETTINGS_SECURITY }}
+          EOF
+
+          cat > ~/.m2/settings.xml <<'EOF'
+          ${{ secrets.MAVEN_SETTINGS }}
+          EOF
 
 
       - name: Deploy with Maven

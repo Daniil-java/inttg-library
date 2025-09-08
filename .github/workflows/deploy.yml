@@ -21,7 +21,7 @@ jobs:
           java-version: '17'
           cache: 'maven'
           # подключаем Sonatype OSSRH
-          server-ids: ossrh
+          server-id: ossrh
           server-username: ${{ secrets.OSSRH_USERNAME }}
           server-password: ${{ secrets.OSSRH_PASSWORD }}
           # импортируем GPG-ключ для подписи
@@ -30,24 +30,24 @@ jobs:
 
       - name: Prepare Maven settings
         run: |
-          cat > ~/.settings-security.xml <<EOF
-          ${{ secrets.MAVEN_SETTINGS_SECURITY }}
-          EOF
-      
-          # 2) credentials
-          mkdir -p ~/.m2
-          cat > ~/.m2/settings.xml <<EOF
-          ${{ secrets.MAVEN_SETTINGS }}
-          EOF
-
-    #          mkdir -p ~/.m2
-#          cat > ~/.m2/settings-security.xml <<'EOF'
+#          cat > ~/.settings-security.xml <<EOF
 #          ${{ secrets.MAVEN_SETTINGS_SECURITY }}
 #          EOF
 #
-#          cat > ~/.m2/settings.xml <<'EOF'
+#          # 2) credentials
+#          mkdir -p ~/.m2
+#          cat > ~/.m2/settings.xml <<EOF
 #          ${{ secrets.MAVEN_SETTINGS }}
 #          EOF
+
+              mkdir -p ~/.m2
+          cat > ~/.m2/settings-security.xml <<'EOF'
+          ${{ secrets.MAVEN_SETTINGS_SECURITY }}
+          EOF
+
+          cat > ~/.m2/settings.xml <<'EOF'
+          ${{ secrets.MAVEN_SETTINGS }}
+          EOF
 
       - name: deploy
         run: mvn -B clean deploy -Prelease -DperformRelease=true
