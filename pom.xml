@@ -225,7 +225,7 @@
         </configuration>
       </plugin>
 
-      <!-- 2) Attach sources -->
+      <!-- 2) Исходники -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -234,14 +234,12 @@
           <execution>
             <id>attach-sources</id>
             <phase>verify</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
+            <goals><goal>jar</goal></goals>
           </execution>
         </executions>
       </plugin>
 
-      <!-- 3) Attach javadocs -->
+      <!-- 3) Javadoc -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -250,14 +248,12 @@
           <execution>
             <id>attach-javadocs</id>
             <phase>verify</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
+            <goals><goal>jar</goal></goals>
           </execution>
         </executions>
       </plugin>
 
-      <!-- 4) Подпись GPG -->
+      <!-- 4) GPG-подпись -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
@@ -266,9 +262,7 @@
           <execution>
             <id>sign-artifacts</id>
             <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
+            <goals><goal>sign</goal></goals>
           </execution>
         </executions>
         <configuration>
@@ -284,21 +278,17 @@
         <version>0.8.0</version>
         <extensions>true</extensions>
         <configuration>
-          <!-- Этот id берётся из settings.xml -->
-          <serverId>ossrh</serverId>
-          <!-- не обязательно, но на всякий случай -->
-          <baseUrl>https://central.sonatype.com</baseUrl>
+          <publishingServerId>ossrh</publishingServerId>
         </configuration>
         <executions>
           <execution>
             <id>publish-to-central</id>
             <phase>deploy</phase>
-            <goals>
-              <goal>publish</goal>
-            </goals>
+            <goals><goal>publish</goal></goals>
           </execution>
         </executions>
       </plugin>
+
     </plugins>
   </build>
 
