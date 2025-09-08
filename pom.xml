@@ -41,7 +41,8 @@
     </repository>
     <snapshotRepository>
       <id>ossrh</id>
-      <url>https://central.sonatype.com/api/publish/v1/snapshots/</url>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+      <!--      <url>https://central.sonatype.com/api/publish/v1/snapshots/</url>-->
 <!--      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>-->
     </snapshotRepository>
   </distributionManagement>
@@ -77,6 +78,8 @@
 
   <build>
     <plugins>
+
+
       <!-- Исходники -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -105,7 +108,44 @@
         </executions>
       </plugin>
 
-<!--      <plugin>-->
+      <!--  Maven GPG Plugin  -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals><goal>sign</goal></goals>
+          </execution>
+        </executions>
+        <configuration>
+          <useAgent>false</useAgent>
+          <passphrase>${env.GPG_PASSPHRASE}</passphrase>
+        </configuration>
+      </plugin>
+
+      <!--  Central Publishing Maven Plugin (новый) -->
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.8.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>ossrh</publishingServerId>
+        </configuration>
+        <executions>
+          <execution>
+            <id>publish-to-central</id>
+            <phase>deploy</phase>
+            <goals><goal>publish</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
+
+
+      <!--      <plugin>-->
 <!--        <groupId>org.apache.maven.plugins</groupId>-->
 <!--        <artifactId>maven-gpg-plugin</artifactId>-->
 <!--        <version>3.2.1</version>-->
@@ -134,26 +174,30 @@
           <value>true</value>
         </property>
       </activation>
-      <build>
-        <plugins>
-          <!-- GPG-подпись -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.2.1</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <gpgPassphrase>${env.GPG_PASSPHRASE}</gpgPassphrase>
-            </configuration>
-          </plugin>
+
+
+<!--      <build>-->
+<!--        <plugins>-->
+<!--          &lt;!&ndash; GPG-подпись &ndash;&gt;-->
+<!--          <plugin>-->
+<!--            <groupId>org.apache.maven.plugins</groupId>-->
+<!--            <artifactId>maven-gpg-plugin</artifactId>-->
+<!--            <version>3.2.1</version>-->
+<!--            <executions>-->
+<!--              <execution>-->
+<!--                <id>sign-artifacts</id>-->
+<!--                <phase>verify</phase>-->
+<!--                <goals>-->
+<!--                  <goal>sign</goal>-->
+<!--                </goals>-->
+<!--              </execution>-->
+<!--            </executions>-->
+<!--            <configuration>-->
+<!--              <gpgPassphrase>${env.GPG_PASSPHRASE}</gpgPassphrase>-->
+<!--            </configuration>-->
+<!--          </plugin>-->
+
+
 <!--          <plugin>-->
 <!--            <groupId>org.apache.maven.plugins</groupId>-->
 <!--            <artifactId>maven-gpg-plugin</artifactId>-->
@@ -179,8 +223,8 @@
 <!--              <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
 <!--            </configuration>-->
 <!--          </plugin>-->
-        </plugins>
-      </build>
+<!--        </plugins>-->
+<!--      </build>-->
     </profile>
   </profiles>
 
