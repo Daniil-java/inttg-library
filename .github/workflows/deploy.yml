@@ -30,7 +30,7 @@ jobs:
 
       - name: Prepare Maven settings
         run: |
-          cat > ~/.m2/settings-security.xml <<'EOF'
+          cat > ~/.settings-security.xml <<'EOF'
           ${{ secrets.MAVEN_SETTINGS_SECURITY }}
           EOF
 
