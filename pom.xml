@@ -37,13 +37,10 @@
     <repository>
       <id>ossrh</id>
       <url>https://central.sonatype.com/api/publish/v1/maven2/</url>
-      <!--      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
     </repository>
     <snapshotRepository>
       <id>ossrh</id>
       <url>https://central.sonatype.com/repository/maven-snapshots/</url>
-      <!--      <url>https://central.sonatype.com/api/publish/v1/snapshots/</url>-->
-<!--      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>-->
     </snapshotRepository>
   </distributionManagement>
 
@@ -76,143 +73,6 @@
     </dependency>
   </dependencies>
 
-<!--  <build>-->
-<!--    <plugins>-->
-
-<!--      <plugin>-->
-<!--        <groupId>org.apache.maven.plugins</groupId>-->
-<!--        <artifactId>maven-deploy-plugin</artifactId>-->
-<!--        <version>3.1.2</version>-->
-<!--        <configuration>-->
-<!--          <skip>true</skip>-->
-<!--        </configuration>-->
-<!--      </plugin>-->
-
-<!--      &lt;!&ndash; Исходники &ndash;&gt;-->
-<!--      <plugin>-->
-<!--        <groupId>org.apache.maven.plugins</groupId>-->
-<!--        <artifactId>maven-source-plugin</artifactId>-->
-<!--        <version>3.2.1</version>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>attach-sources</id>-->
-<!--            <phase>verify</phase>-->
-<!--            <goals><goal>jar</goal></goals>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--      </plugin>-->
-
-<!--      &lt;!&ndash; Javadoc &ndash;&gt;-->
-<!--      <plugin>-->
-<!--        <groupId>org.apache.maven.plugins</groupId>-->
-<!--        <artifactId>maven-javadoc-plugin</artifactId>-->
-<!--        <version>3.4.1</version>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>attach-javadocs</id>-->
-<!--            <phase>verify</phase>-->
-<!--            <goals><goal>jar</goal></goals>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--      </plugin>-->
-
-<!--      &lt;!&ndash;  Maven GPG Plugin  &ndash;&gt;-->
-<!--      <plugin>-->
-<!--        <groupId>org.apache.maven.plugins</groupId>-->
-<!--        <artifactId>maven-gpg-plugin</artifactId>-->
-<!--        <version>3.2.1</version>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>sign-artifacts</id>-->
-<!--            <phase>verify</phase>-->
-<!--            <goals><goal>sign</goal></goals>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--        <configuration>-->
-<!--          <useAgent>false</useAgent>-->
-<!--          <passphrase>${env.GPG_PASSPHRASE}</passphrase>-->
-<!--        </configuration>-->
-<!--      </plugin>-->
-
-<!--      &lt;!&ndash;  Central Publishing Maven Plugin (новый) &ndash;&gt;-->
-<!--&lt;!&ndash;      <plugin>&ndash;&gt;-->
-<!--&lt;!&ndash;        <groupId>org.sonatype.central</groupId>&ndash;&gt;-->
-<!--&lt;!&ndash;        <artifactId>central-publishing-maven-plugin</artifactId>&ndash;&gt;-->
-<!--&lt;!&ndash;        <version>0.8.0</version>&ndash;&gt;-->
-<!--&lt;!&ndash;        <extensions>true</extensions>&ndash;&gt;-->
-<!--&lt;!&ndash;        <configuration>&ndash;&gt;-->
-<!--&lt;!&ndash;          <publishingServerId>ossrh</publishingServerId>&ndash;&gt;-->
-<!--&lt;!&ndash;        </configuration>&ndash;&gt;-->
-<!--&lt;!&ndash;        <executions>&ndash;&gt;-->
-<!--&lt;!&ndash;          <execution>&ndash;&gt;-->
-<!--&lt;!&ndash;            <id>publish-to-central</id>&ndash;&gt;-->
-<!--&lt;!&ndash;            <phase>deploy</phase>&ndash;&gt;-->
-<!--&lt;!&ndash;            <goals><goal>publish</goal></goals>&ndash;&gt;-->
-<!--&lt;!&ndash;          </execution>&ndash;&gt;-->
-<!--&lt;!&ndash;        </executions>&ndash;&gt;-->
-<!--&lt;!&ndash;      </plugin>&ndash;&gt;-->
-
-<!--      <plugin>-->
-<!--        <groupId>org.sonatype.central</groupId>-->
-<!--        <artifactId>central-publishing-maven-plugin</artifactId>-->
-<!--        <version>0.8.0</version>-->
-<!--        <extensions>true</extensions>-->
-<!--        <configuration>-->
-<!--          <publishingServerId>ossrh</publishingServerId>-->
-<!--        </configuration>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>publish-to-central</id>-->
-<!--            <phase>deploy</phase>-->
-<!--            <goals>-->
-<!--              <goal>publish</goal>-->
-<!--            </goals>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--      </plugin>-->
-
-<!--      &lt;!&ndash;      <plugin>&ndash;&gt;-->
-<!--&lt;!&ndash;        <groupId>org.apache.maven.plugins</groupId>&ndash;&gt;-->
-<!--&lt;!&ndash;        <artifactId>maven-gpg-plugin</artifactId>&ndash;&gt;-->
-<!--&lt;!&ndash;        <version>3.2.1</version>&ndash;&gt;-->
-<!--&lt;!&ndash;        <executions>&ndash;&gt;-->
-<!--&lt;!&ndash;          <execution>&ndash;&gt;-->
-<!--&lt;!&ndash;            <id>sign-artifacts</id>&ndash;&gt;-->
-<!--&lt;!&ndash;            <phase>verify</phase>&ndash;&gt;-->
-<!--&lt;!&ndash;            <goals>&ndash;&gt;-->
-<!--&lt;!&ndash;              <goal>sign</goal>&ndash;&gt;-->
-<!--&lt;!&ndash;            </goals>&ndash;&gt;-->
-<!--&lt;!&ndash;          </execution>&ndash;&gt;-->
-<!--&lt;!&ndash;        </executions>&ndash;&gt;-->
-<!--&lt;!&ndash;        <configuration>&ndash;&gt;-->
-<!--&lt;!&ndash;          <gpgPassphrase>${env.GPG_PASSPHRASE}</gpgPassphrase>&ndash;&gt;-->
-<!--&lt;!&ndash;        </configuration>&ndash;&gt;-->
-<!--&lt;!&ndash;      </plugin>&ndash;&gt;-->
-
-<!--      <plugin>-->
-<!--        <groupId>org.sonatype.central</groupId>-->
-<!--        <artifactId>central-publishing-maven-plugin</artifactId>-->
-<!--        <version>0.8.0</version>-->
-<!--        <extensions>true</extensions>-->
-<!--        <configuration>-->
-<!--          &lt;!&ndash; Должен совпадать с <server><id>ossrh</id> в settings.xml &ndash;&gt;-->
-<!--          <publishingServerId>ossrh</publishingServerId>-->
-<!--          &lt;!&ndash; опционально, но можно явно задать базовый URL &ndash;&gt;-->
-<!--          <baseUrl>https://central.sonatype.com</baseUrl>-->
-<!--        </configuration>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>publish-to-central</id>-->
-<!--            <phase>deploy</phase>-->
-<!--            <goals>-->
-<!--              <goal>publish</goal>-->
-<!--            </goals>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--      </plugin>-->
-
-<!--    </plugins>-->
-<!--  </build>-->
   <build>
     <plugins>
       <!-- 1) Пропускаем стандартный deploy -->
@@ -302,57 +162,6 @@
           <value>true</value>
         </property>
       </activation>
-
-
-<!--      <build>-->
-<!--        <plugins>-->
-<!--          &lt;!&ndash; GPG-подпись &ndash;&gt;-->
-<!--          <plugin>-->
-<!--            <groupId>org.apache.maven.plugins</groupId>-->
-<!--            <artifactId>maven-gpg-plugin</artifactId>-->
-<!--            <version>3.2.1</version>-->
-<!--            <executions>-->
-<!--              <execution>-->
-<!--                <id>sign-artifacts</id>-->
-<!--                <phase>verify</phase>-->
-<!--                <goals>-->
-<!--                  <goal>sign</goal>-->
-<!--                </goals>-->
-<!--              </execution>-->
-<!--            </executions>-->
-<!--            <configuration>-->
-<!--              <gpgPassphrase>${env.GPG_PASSPHRASE}</gpgPassphrase>-->
-<!--            </configuration>-->
-<!--          </plugin>-->
-
-
-<!--          <plugin>-->
-<!--            <groupId>org.apache.maven.plugins</groupId>-->
-<!--            <artifactId>maven-gpg-plugin</artifactId>-->
-<!--            <version>3.0.1</version>-->
-<!--            <executions>-->
-<!--              <execution>-->
-<!--                <id>sign-artifacts</id>-->
-<!--                <phase>verify</phase>-->
-<!--                <goals><goal>sign</goal></goals>-->
-<!--              </execution>-->
-<!--            </executions>-->
-<!--          </plugin>-->
-
-          <!-- Nexus Staging для Sonatype OSSRH -->
-<!--          <plugin>-->
-<!--            <groupId>org.sonatype.plugins</groupId>-->
-<!--            <artifactId>nexus-staging-maven-plugin</artifactId>-->
-<!--            <version>1.6.13</version>-->
-<!--            <extensions>true</extensions>-->
-<!--            <configuration>-->
-<!--              <serverId>ossrh</serverId>-->
-<!--              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
-<!--              <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
-<!--            </configuration>-->
-<!--          </plugin>-->
-<!--        </plugins>-->
-<!--      </build>-->
     </profile>
   </profiles>
 
