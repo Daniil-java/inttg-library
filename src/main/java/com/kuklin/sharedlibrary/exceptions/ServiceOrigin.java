@@ -1,6 +1,6 @@
 package com.kuklin.sharedlibrary.exceptions;
 
-public enum Service {
+public enum ServiceOrigin {
     USER_SERVICE,
     AI_CONVERSATION_SERVICE,
     INTERVIEW_SERVICE,

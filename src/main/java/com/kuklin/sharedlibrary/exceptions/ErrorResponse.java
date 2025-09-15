@@ -19,7 +19,7 @@ public class ErrorResponse {
     private String message;
     private String error;
     private String path;
-    private Service service;
+    private ServiceOrigin serviceOrigin;
 
     public ErrorResponse(String message, HttpStatusCode status, WebRequest request) {
         HttpStatus httpStatus = HttpStatus.resolve(status.value());
@@ -37,6 +37,6 @@ public class ErrorResponse {
         this.errorCode = e.getErrorStatus();
         this.path = ((ServletWebRequest) request).getRequest().getRequestURL().toString();
         this.timestamp = new Date();
-        this.service = e.getService();
+        this.serviceOrigin = e.getServiceOrigin();
     }
 }

@@ -5,17 +5,17 @@ import lombok.Data;
 @Data
 public class ErrorResponseException extends RuntimeException{
     private final ErrorStatus errorStatus;
-    private final Service service;
+    private final ServiceOrigin serviceOrigin;
 
-    public ErrorResponseException(ErrorStatus errorStatus, Throwable ex, Service service) {
+    public ErrorResponseException(ErrorStatus errorStatus, Throwable ex, ServiceOrigin serviceOrigin) {
         super(ex);
         this.errorStatus = errorStatus;
-        this.service = service;
+        this.serviceOrigin = serviceOrigin;
     }
 
-    public ErrorResponseException(ErrorStatus errorStatus, Service service) {
+    public ErrorResponseException(ErrorStatus errorStatus, ServiceOrigin serviceOrigin) {
         super(errorStatus.getMessage());
         this.errorStatus = errorStatus;
-        this.service = service;
+        this.serviceOrigin = serviceOrigin;
     }
 }
