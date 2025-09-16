@@ -8,7 +8,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class TopicInterviewMessage {
     private String content;
-    @JsonProperty("isEnd")
-    private boolean isEnd;
+    private Boolean isEnd;
     private int score;
 }
