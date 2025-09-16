@@ -16,7 +16,9 @@ public enum ErrorStatus {
     USER_UPDATE_ERROR(HttpStatus.BAD_REQUEST, "Your request must to contain user ID!"),
     USER_INSUFFICIENT_FUNDS(HttpStatus.BAD_REQUEST, "Insufficient funds in the account!"),
     USER_CREATION_ERROR(HttpStatus.BAD_REQUEST, "User ID must be null, when you create new user!"),
-    VACANCY_NOT_FOUND(HttpStatus.BAD_REQUEST, "Vacancy not found!");
+    VACANCY_NOT_FOUND(HttpStatus.BAD_REQUEST, "Vacancy not found!"),
+    AI_RESPONSE_DESERIALIZATION(HttpStatus.BAD_REQUEST, "AI response deserialization error!")
+    ;
 
     private HttpStatus httpStatus;
     private String message;
